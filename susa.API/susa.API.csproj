@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Auth" />
+      <Folder Include="Auth\Entities\Configurations" />
       <Folder Include="Controllers" />
     </ItemGroup>
 
