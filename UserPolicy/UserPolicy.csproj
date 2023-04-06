@@ -4,27 +4,17 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <UserSecretsId>162ca324-1ad6-46cd-ac63-909bd734fb6b</UserSecretsId>
+        <UserSecretsId>15c1c402-3f9d-4d06-a42d-739ff8e576c0</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
-
-        <PackageReference Include="Mapster" Version="7.3.0"/>
-
-        <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0"/>
-
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.4"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\UserPolicy\UserPolicy.csproj"/>
     </ItemGroup>
 
 </Project>

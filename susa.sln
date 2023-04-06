@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "susa.API", "susa.API\susa.A
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "susa.CLIENT", "susa.CLIENT\susa.CLIENT.esproj", "{359B4D8F-EC44-4B73-B7C3-A3E5A9F1A70B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserPolicy", "UserPolicy\UserPolicy.csproj", "{A871C4F5-82A2-48E0-8CA0-E6D8BA8BDDC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{359B4D8F-EC44-4B73-B7C3-A3E5A9F1A70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{359B4D8F-EC44-4B73-B7C3-A3E5A9F1A70B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{359B4D8F-EC44-4B73-B7C3-A3E5A9F1A70B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A871C4F5-82A2-48E0-8CA0-E6D8BA8BDDC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A871C4F5-82A2-48E0-8CA0-E6D8BA8BDDC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A871C4F5-82A2-48E0-8CA0-E6D8BA8BDDC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A871C4F5-82A2-48E0-8CA0-E6D8BA8BDDC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
