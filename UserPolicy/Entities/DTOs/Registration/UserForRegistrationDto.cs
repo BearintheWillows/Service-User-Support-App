@@ -8,7 +8,10 @@ public class UserForRegistrationDto
 	public string? LastName  { get; set; }
 
 	[Required( ErrorMessage = "Email is required" )]
+	[DataType( DataType.EmailAddress )]
 	public string? Email { get; set; }
+
+	public string? UserName => Email.Split( '@' )[ 0 ];
 
 	[Required( ErrorMessage = "Password is required" )]
 	[DataType( DataType.Password )]

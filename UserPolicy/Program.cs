@@ -13,17 +13,8 @@ Log.Logger = new LoggerConfiguration()
             .WriteTo.Console( restrictedToMinimumLevel: LogEventLevel.Information )
             .CreateLogger();
 
-builder.Services.AddDbContext<AuthDbContext>( options =>
-	{
-		options.UseSqlServer( builder.Configuration.GetConnectionString( "AuthDbConnection" ) );
-	}
-);
-
 
 // Add Identity Services
-
-builder.Services.AddIdentity<User, IdentityRole>()
-       .AddEntityFrameworkStores<AuthDbContext>();
 
 var app = builder.Build();
 
