@@ -3,17 +3,20 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using UserPolicy.Entities.Models;
 
 public class JwtHandler
 {
-	private readonly IConfiguration _configuration;
+	private readonly IConfiguration        _configuration;
 	private readonly IConfigurationSection _jwtSettings;
-	
-	public JwtHandler(IConfiguration configuration)
+	private readonly UserManager<User>     _userManager;
+
+	public JwtHandler(IConfiguration configuration, UserManager<User> userManager)
 	{
 		_configuration = configuration;
+		_userManager = userManager;
 		_jwtSettings = _configuration.GetSection( "JwtSettings" );
 	}
 	
@@ -33,6 +36,12 @@ public class JwtHandler
 			new Claim( ClaimTypes.Email, user.Email ),
 			new Claim( ClaimTypes.NameIdentifier, user.Id )
 		};
+
+		var roles = await _userManager.GetRolesAsync( user );
+		foreach ( var role in roles )
+		{
+			claims.Add(new Claim(ClaimTypes.Role, role));
+		}
 		
 		return claims;
 	}
