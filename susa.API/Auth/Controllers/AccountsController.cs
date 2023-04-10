@@ -1,9 +1,13 @@
 ﻿namespace susa.API.Auth.Controllers;
 
+using System.IdentityModel.Tokens.Jwt;
+using JwtFeatures;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using UserPolicy.Entities.DTOs.Authentication;
 using UserPolicy.Entities.DTOs.Registration;
 using UserPolicy.Entities.Models;
 
@@ -12,10 +16,12 @@ using UserPolicy.Entities.Models;
 public class AccountsController : Controller
 {
 	private readonly UserManager<User> _userManager;
+	private readonly JwtHandler _jwtHandler;
 
-	public AccountsController(UserManager<User> userManager)
+	public AccountsController(UserManager<User> userManager, JwtHandler jwtHandler)
 	{
 		_userManager = userManager;
+		_jwtHandler = jwtHandler;
 	}
 
 	[HttpPost( "register" )]
@@ -38,5 +44,34 @@ public class AccountsController : Controller
 		}
 
 		return Ok( new RegistrationResponseDto { IsSuccessful = true });
+	}
+	
+	[HttpPost( "login" )]
+	public async Task<IActionResult> Login([FromBody] UserForAuthenticationDto? userForAuthentication)
+	{
+		if ( userForAuthentication == null || !ModelState.IsValid )
+		{
+			return BadRequest( "Invalid client request. User is Null." );
+		}
+
+		if ( userForAuthentication.Email != null )
+		{
+			var user = await _userManager.FindByEmailAsync( userForAuthentication.Email );
+
+			if ( user == null || !await _userManager.CheckPasswordAsync( user, userForAuthentication.Password ) )
+			{
+				return Unauthorized();
+			}
+
+			var signingCredentials = _jwtHandler.GetSigningCredentials();
+			var claims = _jwtHandler.GetClaims( user );
+			var tokenOptions = _jwtHandler.GenerateTokenOptions( signingCredentials, claims );
+			var jwtToken = new JwtSecurityTokenHandler().WriteToken( tokenOptions );
+
+			return Ok( new AuthenticationResponseDto { IsAuthenticationSuccessful = true, Token = jwtToken } );
+		} else
+		{
+			return BadRequest( "Email Required" );
+		}
 	}
 }
