@@ -1,5 +1,7 @@
 {
-  "name": "susa-ionic",
-  "integrations": {},
+  "name": "susa.CLIENT",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

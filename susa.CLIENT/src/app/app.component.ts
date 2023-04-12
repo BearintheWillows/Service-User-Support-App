@@ -1,26 +1,23 @@
-import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
+  standalone: true,
+  imports: [IonicModule, RouterLink, RouterLinkActive, CommonModule],
 })
 export class AppComponent {
-  public forecasts?: WeatherForecast[];
-
-  constructor(http: HttpClient) {
-    http.get<WeatherForecast[]>('/weatherforecast').subscribe(result => {
-      this.forecasts = result;
-    }, error => console.error(error));
-  }
-
-  title = 'susa.CLIENT';
-}
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+  public appPages = [
+    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
+    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
+    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
+    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
+    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
+    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
+  ];
+  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  constructor() {}
 }
