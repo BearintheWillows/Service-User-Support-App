@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 using susa.API.Auth.JwtFeatures;
+using susa.API.Data;
 using susa.API.Mapping;
 using UserPolicy;
 using UserPolicy.Entities.Models;
@@ -23,6 +24,12 @@ builder.Services.RegisterMapsterConfiguration();
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<AppDbContext>( options =>
+	                                             options.UseSqlServer(
+		                                             builder.Configuration.GetConnectionString( "DataDbConnection" )
+	                                             )
+);
 
 // Add Identity Services
 
@@ -66,8 +73,6 @@ builder.Services.AddScoped<JwtHandler>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
 
 var app = builder.Build();
 
