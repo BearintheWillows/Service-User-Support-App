@@ -24,7 +24,7 @@ public class AccountsController : Controller
 		_jwtHandler = jwtHandler;
 	}
 
-	[HttpPost( "register" )]
+	[HttpPost( "register" ), Authorize( Roles = "Admin, Manager"  )]
 	public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto? userForRegistration)
 	{
 		if ( userForRegistration == null || !ModelState.IsValid )
@@ -67,7 +67,7 @@ public class AccountsController : Controller
 
 			var signingCredentials = _jwtHandler.GetSigningCredentials();
 			var claims = _jwtHandler.GetClaims( user );
-			var tokenOptions = _jwtHandler.GenerateTokenOptions( signingCredentials, claims );
+			var tokenOptions = _jwtHandler.GenerateTokenOptions( signingCredentials, await claims );
 			var jwtToken = new JwtSecurityTokenHandler().WriteToken( tokenOptions );
 
 			return Ok( new AuthenticationResponseDto { IsAuthenticationSuccessful = true, Token = jwtToken } );

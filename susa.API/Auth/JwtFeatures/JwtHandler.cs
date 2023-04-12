@@ -28,7 +28,7 @@ public class JwtHandler
 		return new SigningCredentials( secret, SecurityAlgorithms.HmacSha256 );
 	}
 	
-	public List<Claim> GetClaims(User user)
+	public async Task<List<Claim>> GetClaims(User user)
 	{
 		var claims = new List<Claim>
 		{
