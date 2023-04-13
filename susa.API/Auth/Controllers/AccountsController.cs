@@ -24,7 +24,7 @@ public class AccountsController : Controller
 		_jwtHandler = jwtHandler;
 	}
 
-	[HttpPost( "register" ), Authorize( Roles = "Admin, Manager"  )]
+	[HttpPost( "register" )]
 	public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto? userForRegistration)
 	{
 		if ( userForRegistration == null || !ModelState.IsValid )
