@@ -13,13 +13,13 @@ export class AuthenticationService {
 
   private userSubject: BehaviorSubject<IUserForRegistrationDto | null> = new BehaviorSubject<IUserForRegistrationDto | null>(null);
 
-  constructor(private http: HttpClient, private routeBuilder: ApiRouteBuilderService) { }
+  constructor(private http: HttpClient, private routeBuilderService: ApiRouteBuilderService) { }
 
   public isAuthenticated(): Observable<boolean>{
     return this.userSubject.asObservable().pipe(map(user => user !== null));
   }
 
-  public registerUser = (route: string, body: IUserForRegistrationDto) => {
-    return this.http.post<IRegistrationResponseDto>(this.routeBuilder.endpoints.auth.register, body);
+  public registerUser = (body: IUserForRegistrationDto) => {
+    return this.http.post<IRegistrationResponseDto>(this.routeBuilderService.endpoints.auth.register, body);
   }
 }
