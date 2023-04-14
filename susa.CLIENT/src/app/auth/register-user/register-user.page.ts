@@ -20,6 +20,7 @@ import { AuthenticationFormComponent } from '../components/authentication-form/a
     AuthenticationFormComponent],
 })
 export class RegisterUserPage implements OnInit {
+
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {

@@ -23,21 +23,31 @@
     type="password"
   >
   </ion-input>
-
-  <ion-input *ngIf="!isLoginMode"
+    <ng-container *ngIf="!isLoginMode">
+  <ion-input 
   class="custom-input ion-padding-horizontal"
     label="Confirm Password"
     labelPlacement="floating"
     placeholder="Enter Password Again..."
     formControlName="confirmPassword"
-    errorText="confirmPasswordError"
+    errorText="{{confirmPasswordError}}"
   >
   </ion-input>
-
+  
   <ion-card-header>Choose A Role</ion-card-header>
-  <ion-radio-group value="Employee">
+  <ion-radio-group value="Employee" formControlName="role">
     <ion-radio value="Employee">Employee</ion-radio>
   </ion-radio-group>
+  </ng-container>
+  <ion-row size="11">
+    <ion-col size="5" offset="3">
+  <ion-button
+    class="custom-button"
+    type="submit"
+    expand="block"
+    [disabled]="!authForm.valid">Submit</ion-button>
+</ion-col>
+</ion-row>
 </ion-col>
 </ion-row>
 </ion-grid>  

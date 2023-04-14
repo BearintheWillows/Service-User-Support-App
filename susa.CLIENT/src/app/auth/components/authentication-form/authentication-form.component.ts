@@ -1,7 +1,8 @@
-import { AfterContentInit, Component, OnInit, SimpleChange } from '@angular/core';
+import { AfterContentInit, Component, Input, OnInit, SimpleChange, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { ComparePasswordValidator } from '../../_validators/compare-password.validator';
 
 @Component({
   selector: 'app-authentication-form',
@@ -12,10 +13,11 @@ import { IonicModule } from '@ionic/angular';
 })
 export class AuthenticationFormComponent implements OnInit{
   authForm: FormGroup = new FormGroup({});
-  isLoginMode:boolean = true;
+  @Input() isLoginMode:boolean = false;
   emailError: string = '';
   passwordError: string = '';
   confirmPasswordError: string = '';
+  ifFormValid: boolean = false;
 
 
   constructor(private formBuilder: FormBuilder) {
@@ -23,15 +25,29 @@ export class AuthenticationFormComponent implements OnInit{
    }
 
   ngOnInit(): void {
+    if (this.isLoginMode) {
     this.authForm = this.formBuilder.group({
       email: ['', [Validators.required,Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)] ],
-      confirmPassword: ['', Validators.required],
-  })
+    })
+    } else {
+    this.authForm = this.formBuilder.group({
+      email: ['', [Validators.required,Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)] ],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)] ],
+      role: ['Employee', Validators.required]
+  }, {validator: ComparePasswordValidator()})
+    this.confirmPasswordErrorTextUpdate();
+}
 
   this.emailErrorTextUpdate();
   this.passwordErrorTextUpdate();
-  this.confirmPasswordErrorTextUpdate();
+  
+
+  this.authForm.valueChanges.subscribe((value) => {
+    this.ifFormValid = this.authForm.valid;
+    console.log(this.ifFormValid);
+  });
   } 
 
   
@@ -48,6 +64,10 @@ export class AuthenticationFormComponent implements OnInit{
   public submitForm = (authFormValue: any) => {
     const formValues = { ...authFormValue };
     console.log(formValues);
+  }
+
+  public onCancel = () => {
+    this.authForm.reset();
   }
 
   private emailErrorTextUpdate = () => {
@@ -98,12 +118,18 @@ export class AuthenticationFormComponent implements OnInit{
       if (this.authForm.controls['confirmPassword'].invalid) {
     
       const errors = this.authForm.controls['confirmPassword'].errors;
-      
+      const formErrors = this.authForm.errors;
       if(errors){
         if (errors['required']) {
           this.confirmPasswordError = 'Confirm Password is required';
-        } 
+        } else if (errors['minlength']) {
+          this.confirmPasswordError = 'Confirm Password must be at least 6 characters';
+        } else if (errors['notSame']) {
+          this.confirmPasswordError = 'Passwords do not match';
+        }
       }
+
+      console.log(this.authForm.errors);
       }
     });
   }
