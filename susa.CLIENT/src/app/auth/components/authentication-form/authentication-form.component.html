@@ -7,15 +7,20 @@
     labelPlacement="floating"
     placeholder="JoeBloggs@example.com"
     formControlName="email"
+    type="email"
+    errorText="{{emailError}}"
     >
 
     </ion-input>
-
+   
   <ion-input class="custom-input ion-padding-horizontal"
     label="Password"
     labelPlacement="floating"
     placeholder="Enter Password..."
     formControlName="password"
+    errorText="{{passwordError}}"
+
+    type="password"
   >
   </ion-input>
 
@@ -25,6 +30,7 @@
     labelPlacement="floating"
     placeholder="Enter Password Again..."
     formControlName="confirmPassword"
+    errorText="confirmPasswordError"
   >
   </ion-input>
 
