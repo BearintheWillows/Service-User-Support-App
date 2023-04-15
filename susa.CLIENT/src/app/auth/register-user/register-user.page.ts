@@ -14,9 +14,9 @@ import { AuthenticationFormComponent } from '../components/authentication-form/a
   styleUrls: ['./register-user.page.scss'],
   standalone: true,
   imports: [
-    IonicModule, 
-    CommonModule, 
-    FormsModule, 
+    IonicModule,
+    CommonModule,
+    FormsModule,
     AuthenticationFormComponent],
 })
 export class RegisterUserPage implements OnInit {
@@ -24,18 +24,12 @@ export class RegisterUserPage implements OnInit {
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
-  
+
 }
 
 
-public registerUser = (registerFormValue: any) => {
-  const formValues = { ...registerFormValue };
-
-  const user: IUserForRegistrationDto = {
-    email: formValues['email'],
-    password: formValues['password'],
-    confirmPassword: formValues['confirmPassword'],
-  };
+public registerUser = ($event: IUserForRegistrationDto) =>{
+  const user: IUserForRegistrationDto = $event;
 
   this.authService.registerUser(user).subscribe({
     next: (_) => console.log('User registered successfully'),

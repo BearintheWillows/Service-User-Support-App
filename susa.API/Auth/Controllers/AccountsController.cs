@@ -43,7 +43,7 @@ public class AccountsController : Controller
 			return BadRequest( new RegistrationResponseDto { IsSuccessful = false, Errors = errors } );
 		}
 
-		await _userManager.AddToRoleAsync( user, "Employee" );
+		await _userManager.AddToRoleAsync( user, userForRegistration.Role.ToLower() );
 
 		return Ok( new RegistrationResponseDto { IsSuccessful = true });
 	}

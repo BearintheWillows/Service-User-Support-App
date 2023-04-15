@@ -12,9 +12,9 @@ export class ApiRouteBuilderService {
 
   endpoints = {
     auth: {
-      register: 'auth/register',
+      register: `${this.apiUrl}/accounts/register`,
     }
   };
-  
+
 }
 

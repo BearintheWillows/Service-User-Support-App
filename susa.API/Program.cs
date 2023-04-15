@@ -19,6 +19,17 @@ Log.Logger = new LoggerConfiguration()
             .WriteTo.Console( restrictedToMinimumLevel: LogEventLevel.Information )
             .CreateLogger();
 
+builder.Services.AddCors( options =>
+	{
+		options.AddPolicy( "CorsPolicy",
+		                   builder => builder.AllowAnyOrigin()
+		                                     .AllowAnyMethod()
+		                                     .AllowAnyHeader()
+		                                     .Build()
+		);
+	}
+);
+
 builder.Services.RegisterMapsterConfiguration();
 
 // Add services to the container.
@@ -68,6 +79,8 @@ builder.Services.AddAuthentication( opt =>
 	}
 );
 
+
+
 builder.Services.AddScoped<JwtHandler>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -91,5 +104,6 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+app.UseCors( "CorsPolicy" );
 
 app.Run();

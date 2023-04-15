@@ -1,8 +1,10 @@
-import { AfterContentInit, Component, Input, OnInit, SimpleChange, inject } from '@angular/core';
+import {AfterContentInit, Component, Input, OnInit, SimpleChange, inject, Output, EventEmitter} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ComparePasswordValidator } from '../../_validators/compare-password.validator';
+import {IRegistrationResponseDto} from "../../_interfaces/iRegistrationResponseDto";
+import {IUserForRegistrationDto} from "../../_interfaces/iUserForRegistrationDto";
 
 @Component({
   selector: 'app-authentication-form',
@@ -18,6 +20,11 @@ export class AuthenticationFormComponent implements OnInit{
   passwordError: string = '';
   confirmPasswordError: string = '';
   ifFormValid: boolean = false;
+  errorMessage: string = '';
+  showError: boolean = false;
+
+  @Output() formSubmit = new EventEmitter<IUserForRegistrationDto>();
+
 
 
   constructor(private formBuilder: FormBuilder) {
@@ -42,28 +49,30 @@ export class AuthenticationFormComponent implements OnInit{
 
   this.emailErrorTextUpdate();
   this.passwordErrorTextUpdate();
-  
+
 
   this.authForm.valueChanges.subscribe((value) => {
     this.ifFormValid = this.authForm.valid;
     console.log(this.ifFormValid);
   });
-  } 
+  }
 
-  
-  
+
+
 
   public validateControl = (controlName: string) => {
     return this.authForm.controls[controlName].invalid && this.authForm.controls[controlName].touched;
   }
-  
+
   public hasError = (controlName: string, errorName: string) => {
     return this.authForm.controls[controlName].hasError(errorName);
   }
 
   public submitForm = (authFormValue: any) => {
     const formValues = { ...authFormValue };
-    console.log(formValues);
+    this.formSubmit.emit(formValues);
+
+
   }
 
   public onCancel = () => {
@@ -72,19 +81,19 @@ export class AuthenticationFormComponent implements OnInit{
 
   private emailErrorTextUpdate = () => {
     this.authForm.controls['email'].valueChanges.subscribe((value) => {
-  
+
       this.authForm.controls['email'].updateValueAndValidity({emitEvent: false});
-  
+
       if (this.authForm.controls['email'].invalid ) {
-    
+
       const errors = this.authForm.controls['email'].errors;
-      
+
       if(errors){
         if (errors['required']) {
           this.emailError = 'Email is required';
         } else if (errors['email']) {
           this.emailError = 'Email is invalid';
-        } 
+        }
       }
       }
     });
@@ -92,19 +101,19 @@ export class AuthenticationFormComponent implements OnInit{
 
   private passwordErrorTextUpdate = () => {
     this.authForm.controls['password'].valueChanges.subscribe((value) => {
-  
+
       this.authForm.controls['password'].updateValueAndValidity({emitEvent: false});
-  
+
       if (this.authForm.controls['password'].invalid) {
-    
+
       const errors = this.authForm.controls['password'].errors;
-      
+
       if(errors){
         if (errors['required']) {
           this.passwordError = 'Password is required';
         } else if (errors['minlength']) {
           this.passwordError = 'Password must be at least 6 characters';
-        } 
+        }
       }
       }
     });
@@ -112,11 +121,11 @@ export class AuthenticationFormComponent implements OnInit{
 
   private confirmPasswordErrorTextUpdate = () => {
     this.authForm.controls['confirmPassword'].valueChanges.subscribe((value) => {
-  
+
       this.authForm.controls['confirmPassword'].updateValueAndValidity({emitEvent: false});
-  
+
       if (this.authForm.controls['confirmPassword'].invalid) {
-    
+
       const errors = this.authForm.controls['confirmPassword'].errors;
       const formErrors = this.authForm.errors;
       if(errors){
@@ -128,8 +137,6 @@ export class AuthenticationFormComponent implements OnInit{
           this.confirmPasswordError = 'Passwords do not match';
         }
       }
-
-      console.log(this.authForm.errors);
       }
     });
   }

@@ -17,4 +17,8 @@ public class UserForRegistrationDto
 	[Compare( "Password", ErrorMessage = "Confirm Password is required" )]
 	[DataType( DataType.Password )]
 	public string? ConfirmPassword { get; set; }
+	
+	[Required( ErrorMessage = "Role is required" )]
+	public string? Role { get; set; }
+	
 }

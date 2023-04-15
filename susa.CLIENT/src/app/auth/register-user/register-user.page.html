@@ -14,7 +14,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-authentication-form [isLoginMode]="false"></app-authentication-form>
+  <app-authentication-form [isLoginMode]="false" (formSubmit)="registerUser($event)"></app-authentication-form>
 
 </ion-content>
 
