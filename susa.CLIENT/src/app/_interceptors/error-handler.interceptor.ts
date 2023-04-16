@@ -25,7 +25,6 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
    private handleError(error: HttpErrorResponse) : string{
     switch (error.status) {
       case 400:
-        console.log(error);
         return this.handleBadRequest(error);
       // case 401:
       //   this.router.navigate(['/login']);
@@ -55,7 +54,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private handleBadRequest(error: HttpErrorResponse): string {
   
-  console.log(this.router.url)
+  
   if (this.router.url === '/admin/register-user') {
     let message = '';
     const values = Object.values(error.error.errors);

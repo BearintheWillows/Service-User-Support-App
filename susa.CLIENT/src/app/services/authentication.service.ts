@@ -5,6 +5,8 @@ import { IUserForRegistrationDto } from '../auth/_interfaces/iUserForRegistratio
 import { IRegistrationResponseDto } from '../auth/_interfaces/iRegistrationResponseDto';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ApiRouteBuilderService } from './route-builder.service';
+import { IUserForAuthenticationDto } from '../auth/_interfaces/iUserForAuthenticationDto';
+import { IAuthenticationResponseDto } from '../auth/_interfaces/iAuthenticationResponseDto';
 
 @Injectable({
   providedIn: 'root'
@@ -23,4 +25,8 @@ export class AuthenticationService {
     console.log(this.routeBuilderService.endpoints.auth.register)
     return this.http.post<IRegistrationResponseDto>(this.routeBuilderService.endpoints.auth.register, body);
   }
+
+  public loginUser = (body: IUserForAuthenticationDto) => {
+    return this.http.post<IAuthenticationResponseDto>(this.routeBuilderService.endpoints.auth.login, body)
+}
 }
