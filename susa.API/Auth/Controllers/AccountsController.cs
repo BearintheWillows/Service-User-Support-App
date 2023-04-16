@@ -27,7 +27,7 @@ public class AccountsController : Controller
 	[HttpPost( "register" )]
 	public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto? userForRegistration)
 	{
-		if ( userForRegistration == null || !ModelState.IsValid )
+		if ( userForRegistration == null)
 		{
 			return BadRequest( "Invalid client request" );
 		}

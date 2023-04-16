@@ -20,9 +20,6 @@ export class AuthenticationFormComponent implements OnInit{
   passwordError: string = '';
   confirmPasswordError: string = '';
   ifFormValid: boolean = false;
-  errorMessage: string = '';
-  showError: boolean = false;
-
   @Output() formSubmit = new EventEmitter<IUserForRegistrationDto>();
 
 

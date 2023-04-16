@@ -14,6 +14,13 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-card *ngIf="showErrorMessage">
+    <ion-card-content>
+      <ion-text color="danger">
+        <p [innerHTML]="errorMessage"></p>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
   <app-authentication-form [isLoginMode]="false" (formSubmit)="registerUser($event)"></app-authentication-form>
 
 </ion-content>

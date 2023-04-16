@@ -21,6 +21,9 @@ import { AuthenticationFormComponent } from '../components/authentication-form/a
 })
 export class RegisterUserPage implements OnInit {
 
+  errorMessage: string = '';
+  showErrorMessage: boolean = false;
+
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
@@ -33,7 +36,11 @@ public registerUser = ($event: IUserForRegistrationDto) =>{
 
   this.authService.registerUser(user).subscribe({
     next: (_) => console.log('User registered successfully'),
-    error: (error: HttpErrorResponse) => console.log(error.error.errors)}
+    error: (error: HttpErrorResponse) =>
+    {
+      this.errorMessage = error.message;
+      this.showErrorMessage = true;
+    }}
   )
 }
 

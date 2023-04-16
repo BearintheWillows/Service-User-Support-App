@@ -14,7 +14,7 @@ export class ErrorHandlerService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-
+        console.log('error: ' + error);
         let errorMessage = this.handleError(error);
         return throwError(() => new Error(errorMessage));
       })
@@ -25,6 +25,7 @@ export class ErrorHandlerService implements HttpInterceptor {
     {
       switch (error.status) {
         case 400:
+          console.log(error);
           return this.handleBadRequest(error);
         // case 401:
         //   this.router.navigate(['/login']);
@@ -52,8 +53,9 @@ export class ErrorHandlerService implements HttpInterceptor {
   }
 
 
-  private handleBadRequest(error: HttpErrorResponse) {
-    if (this.router.url === '/auth/register-user') {
+  private handleBadRequest = (error: HttpErrorResponse): string => {
+    console.log(this.router.url)
+    if (this.router.url === '/admin/register-user') {
       let message = '';
       const values = Object.values(error.error.errors);
       // @ts-ignore
