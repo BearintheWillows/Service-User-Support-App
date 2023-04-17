@@ -22,7 +22,6 @@ export class AuthenticationService {
   }
 
   public registerUser = (body: IUserForRegistrationDto) => {
-    console.log(this.routeBuilderService.endpoints.auth.register)
     return this.http.post<IRegistrationResponseDto>(this.routeBuilderService.endpoints.auth.register, body);
   }
 

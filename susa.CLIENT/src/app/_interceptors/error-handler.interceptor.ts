@@ -55,7 +55,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   private handleBadRequest(error: HttpErrorResponse): string {
   
   
-  if (this.router.url === '/admin/register-user') {
+  if (this.router.url === '/admin/register-user' || this.router.url === '/auth/login') {
     let message = '';
     const values = Object.values(error.error.errors);
     // @ts-ignore
@@ -73,6 +73,7 @@ private handleUnauthorized(error: HttpErrorResponse): string {
   if (this.router.url === '/auth/login') {
     let message = '';
     const values = Object.values(error.error.errors);
+
     // @ts-ignore
     values.map((m: string): void => {
       message += m + '<br>';

@@ -53,16 +53,19 @@ public class AccountsController : Controller
 	{
 		if ( userForAuthentication == null || !ModelState.IsValid )
 		{
-			return BadRequest( "Invalid client request. User is Null." );
+			return BadRequest( new AuthenticationResponseDto 
+			{ IsAuthenticationSuccessful = false,
+			  ErrorMessage = "Invalid client request" 
+			} );
 		}
 
 		if ( userForAuthentication.Email != null )
 		{
 			var user = await _userManager.FindByEmailAsync( userForAuthentication.Email );
-
+		
 			if ( user == null || !await _userManager.CheckPasswordAsync( user, userForAuthentication.Password ) )
 			{
-				return Unauthorized( new AuthenticationResponseDto {
+				return BadRequest( new AuthenticationResponseDto {
 					 IsAuthenticationSuccessful = false,
 					 ErrorMessage = "Email or Password Invalid" });
 			}

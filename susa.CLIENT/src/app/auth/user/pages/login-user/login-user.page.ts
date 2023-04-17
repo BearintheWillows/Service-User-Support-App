@@ -32,6 +32,7 @@ export class LoginUserPage implements OnInit {
 
   public loginUser = ($event: IUserForAuthenticationDto) => {
     const user: IUserForAuthenticationDto = $event;
+    console.log('User: ', user);
 
     this.authService.loginUser(user).subscribe({
       next: (res: IAuthenticationResponseDto) => {
