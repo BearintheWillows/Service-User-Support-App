@@ -62,7 +62,9 @@ public class AccountsController : Controller
 
 			if ( user == null || !await _userManager.CheckPasswordAsync( user, userForAuthentication.Password ) )
 			{
-				return Unauthorized();
+				return Unauthorized( new AuthenticationResponseDto {
+					 IsAuthenticationSuccessful = false,
+					 ErrorMessage = "Email or Password Invalid" });
 			}
 
 			var signingCredentials = _jwtHandler.GetSigningCredentials();

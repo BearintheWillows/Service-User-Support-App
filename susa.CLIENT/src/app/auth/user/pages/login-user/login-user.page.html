@@ -11,7 +11,17 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-authentication-form [isLoginMode]="true"></app-authentication-form>
+  <ion-card *ngIf="showErrorMessage">
+    <ion-card-content>
+      <ion-text color="danger">
+        <p [innerHTML]="errorMessage"></p>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  //TODO: Seperate Error card into own component.
+
+  <app-authentication-form [isLoginMode]="true" (formSubmit)="loginUser($event)"></app-authentication-form>
 
 
 </ion-content>

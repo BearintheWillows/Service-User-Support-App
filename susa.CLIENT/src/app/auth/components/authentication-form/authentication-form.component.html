@@ -34,11 +34,13 @@
   >
   </ion-input>
   
+   <<ng-container *ngIf="!isLoginMode">
   <ion-card-header>Choose A Role</ion-card-header>
   <ion-radio-group value="Employee" formControlName="role">
     <ion-radio value="Employee">Employee</ion-radio>
   </ion-radio-group>
   </ng-container>
+</ng-container>
   <ion-row size="11">
     <ion-col size="5" offset="3">
   <ion-button

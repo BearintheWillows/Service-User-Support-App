@@ -26,9 +26,9 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     switch (error.status) {
       case 400:
         return this.handleBadRequest(error);
-      // case 401:
-      //   this.router.navigate(['/login']);
-      //   break;
+      case 401:
+        return this.handleUnauthorized(error);
+        break;
       // case 403:
       //   this.router.navigate(['/forbidden']);
       //   break;
@@ -56,6 +56,21 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   
   
   if (this.router.url === '/admin/register-user') {
+    let message = '';
+    const values = Object.values(error.error.errors);
+    // @ts-ignore
+    values.map((m: string): void => {
+      message += m + '<br>';
+    });
+
+    return message.slice(0, -4);
+  } else {
+    return error.error ? error.error : error.message;
+  }
+}
+
+private handleUnauthorized(error: HttpErrorResponse): string {
+  if (this.router.url === '/auth/login') {
     let message = '';
     const values = Object.values(error.error.errors);
     // @ts-ignore
