@@ -17,6 +17,10 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./auth/authorization.routes').then( m => m.Auth_Routes)
+    loadChildren: () => import('./admin/admin.routes').then( m => m.Admin_Routes)
   },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/authorization.routes').then( m => m.Auth_Routes)
+  }
 ];

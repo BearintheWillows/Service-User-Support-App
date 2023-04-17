@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IUserForRegistrationDto } from '../_interfaces/iUserForRegistrationDto';
+import { IUserForRegistrationDto } from '../../../_interfaces/iUserForRegistrationDto';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { error } from 'console';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthenticationFormComponent } from '../components/authentication-form/authentication-form.component';
+import { AuthenticationFormComponent } from '../../../components/authentication-form/authentication-form.component';
 
 @Component({
   selector: 'app-register-user',
