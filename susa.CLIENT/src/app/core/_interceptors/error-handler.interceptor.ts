@@ -54,6 +54,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private handleBadRequest(error: HttpErrorResponse): string {
   
+    //FIXME: Fix error message for logged in user
   
   if (this.router.url === '/admin/register-user' || this.router.url === '/auth/login') {
     let message = '';

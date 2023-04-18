@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AuthenticationFormComponent } from "../../../components/authentication-form/authentication-form.component";
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { IUserForAuthenticationDto } from 'src/app/auth/_interfaces/iUserForAuthenticationDto';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IAuthenticationResponseDto } from 'src/app/auth/_interfaces/iAuthenticationResponseDto';
+import {AuthenticationService} from "../../../../../services/authentication.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {IUserForAuthenticationDto} from "../../../_interfaces/iUserForAuthenticationDto";
+import {IAuthenticationResponseDto} from "../../../_interfaces/iAuthenticationResponseDto";
+import {HttpErrorResponse} from "@angular/common/http";
+
 
 @Component({
     selector: 'app-login',
@@ -38,6 +39,8 @@ export class LoginUserPage implements OnInit {
       next: (res: IAuthenticationResponseDto) => {
         console.log('User logged in successfully');
         localStorage.setItem('token', res.token);
+        this.authService.changeAuthenticationStatus(res.isSuccessful, res.user)
+
         this.router.navigate([this.returnUrl]);
       },
       error: (error: HttpErrorResponse) =>

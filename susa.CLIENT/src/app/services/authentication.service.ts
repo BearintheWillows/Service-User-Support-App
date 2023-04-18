@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EnvironmentUrlService } from './environment-url.service';
-import { IUserForRegistrationDto } from '../auth/_interfaces/iUserForRegistrationDto';
-import { IRegistrationResponseDto } from '../auth/_interfaces/iRegistrationResponseDto';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { ApiRouteBuilderService } from './route-builder.service';
-import { IUserForAuthenticationDto } from '../auth/_interfaces/iUserForAuthenticationDto';
-import { IAuthenticationResponseDto } from '../auth/_interfaces/iAuthenticationResponseDto';
+import {BehaviorSubject} from "rxjs";
+import {ApiRouteBuilderService} from "./route-builder.service";
+import {UserService} from "./user.service";
+import {IUserForRegistrationDto} from "../features/auth/_interfaces/iUserForRegistrationDto";
+import {IRegistrationResponseDto} from "../features/auth/_interfaces/iRegistrationResponseDto";
+import {IUserForAuthenticationDto} from "../features/auth/_interfaces/iUserForAuthenticationDto";
+import {IAuthenticationResponseDto} from "../features/auth/_interfaces/iAuthenticationResponseDto";
+import {IUser} from "../features/user/_interfaces/iUser";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private userSubject: BehaviorSubject<IUserForRegistrationDto | null> = new BehaviorSubject<IUserForRegistrationDto | null>(null);
+  private authStatusListener = new BehaviorSubject<boolean>(false);
+  public authStatusListener$ = this.authStatusListener.asObservable();
 
-  constructor(private http: HttpClient, private routeBuilderService: ApiRouteBuilderService) { }
+  constructor(private http: HttpClient, private routeBuilderService: ApiRouteBuilderService, private userService: UserService) { }
 
-  public isAuthenticated(): Observable<boolean>{
-    return this.userSubject.asObservable().pipe(map(user => user !== null));
-  }
 
   public registerUser = (body: IUserForRegistrationDto) => {
     return this.http.post<IRegistrationResponseDto>(this.routeBuilderService.endpoints.auth.register, body);
@@ -28,4 +27,9 @@ export class AuthenticationService {
   public loginUser = (body: IUserForAuthenticationDto) => {
     return this.http.post<IAuthenticationResponseDto>(this.routeBuilderService.endpoints.auth.login, body)
 }
+
+  public changeAuthenticationStatus = (isAuthenticated: boolean, user: IUser) => {
+    this.authStatusListener.next(isAuthenticated);
+
+  }
 }

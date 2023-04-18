@@ -3,10 +3,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using JwtFeatures;
 using Mapster;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
+using UserPolicy.Entities.DTOs.Account;
 using UserPolicy.Entities.DTOs.Authentication;
 using UserPolicy.Entities.DTOs.Registration;
 using UserPolicy.Entities.Models;
@@ -75,7 +74,8 @@ public class AccountsController : Controller
 			var tokenOptions = _jwtHandler.GenerateTokenOptions( signingCredentials, await claims );
 			var jwtToken = new JwtSecurityTokenHandler().WriteToken( tokenOptions );
 
-			return Ok( new AuthenticationResponseDto { IsAuthenticationSuccessful = true, Token = jwtToken } );
+			return Ok( new AuthenticationResponseDto { IsAuthenticationSuccessful = true, Token = jwtToken, User = new UserDto{ UserName = user.UserName } }
+			);
 		} else
 		{
 			return BadRequest( "Email Required" );
