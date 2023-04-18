@@ -14,6 +14,9 @@ export class ApiRouteBuilderService {
     auth: {
       register: `${this.apiUrl}/accounts/register`,
       login: `${this.apiUrl}/accounts/login`
+    },
+    user: {
+      getUser: `${this.apiUrl}/user`
     }
   };
 

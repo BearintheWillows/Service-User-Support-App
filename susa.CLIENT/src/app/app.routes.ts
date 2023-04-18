@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
+import { LoginUserPage } from './features/auth/pages/login-user/login-user.page';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/inbox',
-    pathMatch: 'full',
+    component: LoginUserPage,
   },
   {
     path: 'folder/:id',

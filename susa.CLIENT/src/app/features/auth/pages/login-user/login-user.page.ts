@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { AuthenticationFormComponent } from "../../../components/authentication-form/authentication-form.component";
-import {AuthenticationService} from "../../../../../services/authentication.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {IUserForAuthenticationDto} from "../../../_interfaces/iUserForAuthenticationDto";
-import {IAuthenticationResponseDto} from "../../../_interfaces/iAuthenticationResponseDto";
+
 import {HttpErrorResponse} from "@angular/common/http";
+import {AuthenticationFormComponent} from "../../components/authentication-form/authentication-form.component";
+import {AuthenticationService} from "../../../../core/services/authentication.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {IUserForAuthenticationDto} from "../../_interfaces/iUserForAuthenticationDto";
+import {IAuthenticationResponseDto} from "../../_interfaces/iAuthenticationResponseDto";
 
 
 @Component({
@@ -31,7 +32,7 @@ export class LoginUserPage implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  public loginUser = ($event: IUserForAuthenticationDto) => {
+  async loginUser($event: IUserForAuthenticationDto){
     const user: IUserForAuthenticationDto = $event;
     console.log('User: ', user);
 
@@ -39,9 +40,10 @@ export class LoginUserPage implements OnInit {
       next: (res: IAuthenticationResponseDto) => {
         console.log('User logged in successfully');
         localStorage.setItem('token', res.token);
-        this.authService.changeAuthenticationStatus(res.isSuccessful, res.user)
+        this.authService.changeAuthenticationStatus(res.isAuthenticationSuccessful)
+        
 
-        this.router.navigate([this.returnUrl]);
+        this.router.navigate(['/folder/Inbox']);
       },
       error: (error: HttpErrorResponse) =>
       {

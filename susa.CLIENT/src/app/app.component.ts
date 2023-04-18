@@ -2,16 +2,18 @@ import { CommonModule } from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import {AuthenticationService} from "./services/authentication.service";
-import {UserService} from "./services/user.service";
+
 import {Observable} from "rxjs";
 import {IUser} from "./features/user/_interfaces/iUser";
+import {AuthenticationService} from "./core/services/authentication.service";
+import { MenuComponent } from "./features/menu/menu.component";
+
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
-  standalone: true,
-  imports: [IonicModule, RouterLink, RouterLinkActive, CommonModule],
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.scss'],
+    standalone: true,
+    imports: [IonicModule, RouterLink, RouterLinkActive, CommonModule, MenuComponent]
 })
 export class AppComponent implements OnInit{
 
@@ -22,14 +24,9 @@ export class AppComponent implements OnInit{
     { title: 'Profile', url: '/profile', icon: 'Person' },
   ];
    public labels = ['A House'];
-  constructor( private userService: UserService, private authServie: AuthenticationService)   {}
+  constructor(private authServie: AuthenticationService)   {}
      ngOnInit() {
-      this.authServie.authStatusListener$.subscribe((isAuthenticated: boolean) => {
-        if (isAuthenticated) {
-          this.user$ = this.userService.user$;
-          this.isLogged$ = this.authServie.authStatusListener$;
-        }
-      });
+
     }
 
 }
