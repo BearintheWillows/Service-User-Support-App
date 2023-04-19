@@ -8,6 +8,8 @@ import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {ErrorHandlerInterceptor} from "./app/core/_interceptors/error-handler.interceptor";
+import { JwtModule } from '@auth0/angular-jwt';
+import { config } from 'process';
 
 
 if (environment.production) {
@@ -17,8 +19,16 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-
     importProvidersFrom(IonicModule.forRoot({})),
+    importProvidersFrom(JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+          },
+        allowedDomains: ['localhost:6005'],
+        disallowedRoutes: []
+      }
+    })),
     provideRouter(routes),
     provideHttpClient(
       withInterceptorsFromDi()

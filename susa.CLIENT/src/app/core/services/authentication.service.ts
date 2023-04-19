@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {BehaviorSubject} from "rxjs";
 import {ApiRouteBuilderService} from "./route-builder.service";
@@ -8,11 +8,14 @@ import {IUserForRegistrationDto} from "../../features/auth/_interfaces/iUserForR
 import {IUserForAuthenticationDto} from "../../features/auth/_interfaces/iUserForAuthenticationDto";
 import {IAuthenticationResponseDto} from "../../features/auth/_interfaces/iAuthenticationResponseDto";
 import {IUser} from "../../features/user/_interfaces/iUser";
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+
+  jwtHelper = inject(JwtHelperService)
 
   private authStatusListener = new BehaviorSubject<boolean>(false);
   public authStatusListener$ = this.authStatusListener.asObservable();
@@ -35,5 +38,14 @@ export class AuthenticationService {
   public logout() {
     localStorage.removeItem('token');
     this.changeAuthenticationStatus(false);
+  }
+
+  public isAuthenticated = (): boolean => {
+    const token = localStorage.getItem('token');
+
+    console.log(token);
+    console.log(this.jwtHelper.isTokenExpired(token));
+
+    return !!(token && !this.jwtHelper.isTokenExpired(token));
   }
 }

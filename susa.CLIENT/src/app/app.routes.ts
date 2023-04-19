@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
 import { LoginUserPage } from './features/auth/pages/login-user/login-user.page';
+import { AppComponent } from './app.component';
+import { AuthGuard } from './core/_guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth/login',
-    pathMatch: 'full',
+    component: AppComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'folder/:id',
