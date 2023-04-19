@@ -1,7 +1,10 @@
 namespace susa.API.User.Controller;
 
+using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using UserPolicy.Entities.DTOs.Account;
 using UserPolicy.Entities.Models;
 
 [ApiController]
@@ -15,11 +18,13 @@ public class UserController : ControllerBase
         _userManager = userManager;
     }
     
-    [HttpGet]
+    [HttpGet, Authorize]
     public async Task<IActionResult> Get()
     {
         var user = await _userManager.GetUserAsync(User);
-        return Ok(user);
+        
+        UserDto userDto = user.Adapt<UserDto>();
+        return Ok(userDto);
     }
 
 }

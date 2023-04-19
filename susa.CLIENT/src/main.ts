@@ -16,24 +16,31 @@ if (environment.production) {
   enableProdMode();
 }
 
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
+
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    importProvidersFrom(IonicModule.forRoot({})),
-    importProvidersFrom(JwtModule.forRoot({
-      config: {
-        tokenGetter: () => {
-          return localStorage.getItem('token');
-          },
-        allowedDomains: ['localhost:6005'],
-        disallowedRoutes: []
-      }
-    })),
-    provideRouter(routes),
     provideHttpClient(
       withInterceptorsFromDi()
     ),
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true },
+    provideRouter(routes),
+    importProvidersFrom(
+      IonicModule.forRoot({}),
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: tokenGetter,
+          allowedDomains: ['localhost:5006'],
+          disallowedRoutes: []
+        }
+      })
+      ),
+
+
+
   ]
 });
 

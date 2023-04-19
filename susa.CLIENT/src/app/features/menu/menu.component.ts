@@ -25,7 +25,6 @@ export class MenuComponent  implements OnInit{
 
 
 
-  user$: Observable<IUser> = this.userService.getUserName();
 
   public appPages = [
     { title: 'Profile', url: '/profile', icon: 'Person' },
@@ -38,7 +37,6 @@ export class MenuComponent  implements OnInit{
   ngOnInit() {
     this.authService.authStatusListener$.subscribe((isAuthenticated) => {
       this.isUserAuthenticated = isAuthenticated;
-      console.log('isAuthenticated', isAuthenticated);
     });
   }
 

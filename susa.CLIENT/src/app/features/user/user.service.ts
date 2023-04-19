@@ -13,8 +13,8 @@ export class UserService {
   http = inject(HttpClient);
 
 
-  public getUserName(): Observable<IUser> {
+  public getUser(): Observable<IUser> {
     return this.http.get<IUser>(this.routeBuilder.endpoints.user.getUser);
   }
-    
+
 }

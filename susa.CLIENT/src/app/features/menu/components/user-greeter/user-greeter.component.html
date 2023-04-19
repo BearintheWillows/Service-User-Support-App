@@ -1,8 +1,14 @@
 <ion-card>
-  <ion-card-header>
-    <ion-card-title>Welcome, User</ion-card-title>
+  <ion-card-header *ngIf="user.userName; else notLogged">
+    <ion-card-title>Welcome, {{user.userName}}</ion-card-title>
   </ion-card-header>
   <ion-card-content>
     <p>Card Content</p>
   </ion-card-content>
 </ion-card>
+
+<ng-template #notLogged>
+<ion-card-header>
+  <ion-card-title>Welcome, User</ion-card-title>
+</ion-card-header>
+</ng-template>
