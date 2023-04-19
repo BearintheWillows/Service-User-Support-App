@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IUserForRegistrationDto } from '../../../_interfaces/iUserForRegistrationDto';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { error } from 'console';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AuthenticationFormComponent } from '../../../components/authentication-form/authentication-form.component';
+import {
+  AuthenticationFormComponent
+} from "../../../../auth/components/authentication-form/authentication-form.component";
+import {AuthenticationService} from "../../../../../core/services/authentication.service";
+import {IUserForRegistrationDto} from "../../../../auth/_interfaces/iUserForRegistrationDto";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-register-user',
@@ -21,6 +22,8 @@ import { AuthenticationFormComponent } from '../../../components/authentication-
 })
 export class RegisterUserPage implements OnInit {
 
+  claims: [] = [];
+
   errorMessage: string = '';
   showErrorMessage: boolean = false;
 
@@ -28,6 +31,17 @@ export class RegisterUserPage implements OnInit {
 
   ngOnInit(): void {
 
+}
+
+public getClaims = () => {
+  this.authService.getClaims().subscribe({
+    next : (claims) => {
+      this.claims = claims as [];
+    },
+    error: (err) => {
+      console.log(err);
+    }
+  });
 }
 
 

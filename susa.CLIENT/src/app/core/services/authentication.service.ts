@@ -43,9 +43,21 @@ export class AuthenticationService {
   public isAuthenticated = (): boolean => {
     const token = localStorage.getItem('token');
 
-    console.log(token);
-    console.log(this.jwtHelper.isTokenExpired(token));
-
     return !!(token && !this.jwtHelper.isTokenExpired(token));
+  }
+
+  public getClaims = () => {
+    return this.http.get(this.routeBuilderService.endpoints.admin.getClaims);
+  }
+
+  public isUserAdmin = (): boolean => {
+    const token = localStorage.getItem('token');
+    if(token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken.role === 'Admin';
+    }
+    return false;
+
+
   }
 }

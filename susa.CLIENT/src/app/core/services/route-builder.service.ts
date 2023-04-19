@@ -17,6 +17,9 @@ export class ApiRouteBuilderService {
     },
     user: {
       getUser: `${this.apiUrl}/user`
+    },
+    admin:{
+      getClaims: `${this.apiUrl}/admin/claims`
     }
   };
 

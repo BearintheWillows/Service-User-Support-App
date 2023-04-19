@@ -26,7 +26,9 @@ export class AppComponent implements OnInit{
    public labels = ['A House'];
   constructor(private authServie: AuthenticationService)   {}
      ngOnInit() {
-
+      if(this.authServie.isAuthenticated()){
+        this.authServie.changeAuthenticationStatus(true);
+      }
     }
 
 }
