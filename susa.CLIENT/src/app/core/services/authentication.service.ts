@@ -7,7 +7,6 @@ import {IRegistrationResponseDto} from "../../features/auth/_interfaces/iRegistr
 import {IUserForRegistrationDto} from "../../features/auth/_interfaces/iUserForRegistrationDto";
 import {IUserForAuthenticationDto} from "../../features/auth/_interfaces/iUserForAuthenticationDto";
 import {IAuthenticationResponseDto} from "../../features/auth/_interfaces/iAuthenticationResponseDto";
-import {IUser} from "../../features/user/_interfaces/iUser";
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({

@@ -1,10 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-
-import {Observable} from "rxjs";
-import {IUser} from "./features/user/_interfaces/iUser";
 import {AuthenticationService} from "./core/services/authentication.service";
 import { MenuComponent } from "./features/menu/menu.component";
 
@@ -17,17 +14,17 @@ import { MenuComponent } from "./features/menu/menu.component";
 })
 export class AppComponent implements OnInit{
 
-  user$: Observable<IUser> = new Observable<IUser>();
-  isLogged$: Observable<boolean> = new Observable<boolean>();
+     private authService: AuthenticationService = inject(AuthenticationService);
 
-  public appPages = [
-    { title: 'Profile', url: '/profile', icon: 'Person' },
-  ];
-   public labels = ['A House'];
-  constructor(private authServie: AuthenticationService)   {}
+     authenticated: boolean = false;
+
      ngOnInit() {
-      if(this.authServie.isAuthenticated()){
-        this.authServie.changeAuthenticationStatus(true);
+      if(this.authService.isAuthenticated()){
+        this.authService.changeAuthenticationStatus(true);
+        this.authenticated = true;
+      } else {
+        this.authService.changeAuthenticationStatus(false);
+        this.authenticated = false;
       }
     }
 

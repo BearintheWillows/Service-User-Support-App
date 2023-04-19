@@ -1,12 +1,9 @@
-import { Observable } from 'rxjs';
-import { UserService } from './../user/user.service';
-import { AuthenticationService } from '../../core/services/authentication.service';
-import { CommonModule } from '@angular/common';
-import { Component, OnChanges, OnInit, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { UserGreeterComponent } from "./components/user-greeter/user-greeter.component";
-import { IUser } from '../user/_interfaces/iUser';
+import {Component, inject, OnInit} from "@angular/core";
+import {CommonModule} from "@angular/common";
+import {IonicModule} from "@ionic/angular";
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
+import {UserGreeterComponent} from "./components/user-greeter/user-greeter.component";
+import {AuthenticationService} from "../../core/services/authentication.service";
 
 @Component({
     selector: 'app-menu',
@@ -17,7 +14,6 @@ import { IUser } from '../user/_interfaces/iUser';
 })
 export class MenuComponent  implements OnInit{
   authService: AuthenticationService = inject(AuthenticationService);
-  userService: UserService = inject(UserService);
   router: Router = inject(Router);
 
   public isUserAuthenticated: boolean = false;
