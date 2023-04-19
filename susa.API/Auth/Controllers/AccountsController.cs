@@ -64,7 +64,7 @@ public class AccountsController : Controller
 		
 			if ( user == null || !await _userManager.CheckPasswordAsync( user, userForAuthentication.Password ) )
 			{
-				return BadRequest( new AuthenticationResponseDto {
+				return Unauthorized( new AuthenticationResponseDto {
 					 IsAuthenticationSuccessful = false,
 					 ErrorMessage = "Email or Password Invalid" });
 			}

@@ -72,15 +72,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
 private handleUnauthorized(error: HttpErrorResponse): string {
   if (this.router.url === '/auth/login') {
-    let message = '';
-    const values = Object.values(error.error.errors);
-
-    // @ts-ignore
-    values.map((m: string): void => {
-      message += m + '<br>';
-    });
-
-    return message.slice(0, -4);
+    return 'Authentication failed. Please check your credentials.';
   } else {
     return error.error ? error.error : error.message;
   }

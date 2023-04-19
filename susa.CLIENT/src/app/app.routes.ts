@@ -4,7 +4,8 @@ import { LoginUserPage } from './features/auth/pages/login-user/login-user.page'
 export const routes: Routes = [
   {
     path: '',
-    component: LoginUserPage,
+    redirectTo: 'auth/login',
+    pathMatch: 'full',
   },
   {
     path: 'folder/:id',
