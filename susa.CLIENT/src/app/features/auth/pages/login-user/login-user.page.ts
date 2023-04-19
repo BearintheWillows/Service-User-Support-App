@@ -38,7 +38,7 @@ export class LoginUserPage implements OnInit {
 
     this.authService.loginUser(user).subscribe({
       next: (res: IAuthenticationResponseDto) => {
-        console.log('User logged in successfully');
+    
         localStorage.setItem('token', res.token);
         this.authService.changeAuthenticationStatus(res.isAuthenticationSuccessful)
         

@@ -30,6 +30,10 @@ export class AuthenticationService {
 
   public changeAuthenticationStatus = (isAuthenticated: boolean) => {
     this.authStatusListener.next(isAuthenticated);
+}
 
+  public logout() {
+    localStorage.removeItem('token');
+    this.changeAuthenticationStatus(false);
   }
 }
